@@ -1,0 +1,91 @@
+<mvc:View
+    controllerName="masterdetail.controller.Master"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:f="sap.f"
+    xmlns:smartFilterBar="sap.ui.comp.smartfilterbar"
+    xmlns:smartTable="sap.ui.comp.smarttable"
+    xmlns:table="sap.ui.table"
+    xmlns:core="sap.ui.core"
+>
+    <f:DynamicPage
+        id="idMainDynamicPage"
+        showFooter="true"
+        toggleHeaderOnTitleClick="false"
+        busy="{view>/busy}"
+        busyIndicatorDelay="0"
+    >
+        <!-- DynamicPage Title -->
+        <f:title>
+            <f:DynamicPageTitle>
+                <f:heading>
+                    <Title text="{i18n>app.page.title}" />
+                </f:heading>
+                <f:actions>
+                    <Button
+                        icon="sap-icon://menu2"
+                        tooltip="{i18n>view.Main.button.info.tooltip}"
+                        press="onPressInfoMenu"
+                    />
+                </f:actions>
+            </f:DynamicPageTitle>
+        </f:title>
+        <f:header>
+            <f:DynamicPageHeader pinnable="false">
+                <f:content>
+                    <smartFilterBar:SmartFilterBar
+                        id="idChecklistSmartFilterBar"
+                        entitySet="Customers"
+                        persistencyKey="masterfilterbar"
+                        beforeVariantFetch="onBeforeVariantFetch"
+                        afterVariantLoad="onAfterVariantLoad"
+                    >
+                        <smartFilterBar:controlConfiguration>
+                            <smartFilterBar:ControlConfiguration
+                                key="CompanyName"
+                                id="idCompanyName"
+                                label="CompanyName"
+                                visibleInAdvancedArea="true"
+                                index="1"
+                            />
+
+                            <smartFilterBar:ControlConfiguration
+                                key="PostalCode"
+                                id="idPostalCodee"
+                                label="PostalCode"
+                                visibleInAdvancedArea="true"
+                                index="2"
+                            />
+                        </smartFilterBar:controlConfiguration>
+                    </smartFilterBar:SmartFilterBar>
+                </f:content>
+            </f:DynamicPageHeader>
+        </f:header>
+
+        <!-- DynamicPage Content -->
+        <f:content>
+            <core:Fragment fragmentName="masterdetail.view.fragment.MainSmartTable" type="XML" />
+        </f:content>
+
+        <!-- DynamicPage Footer -->
+        <f:footer>
+            <Toolbar>
+                <Button
+                    type="{= ${view>/pendingSyncRequests} ? 'Reject': 'Default'}"
+                    visible="{= !${device>/system/desktop} }"
+                    icon="sap-icon://synchronize"
+                    press="onPressSynchronize"
+                />
+                <ToolbarSpacer />
+                <Button
+                    text="{= ${device>/system/desktop} ? ${i18n>view.Main.button.newFunctLocation} : '' }"
+                    type="Emphasized"
+                    tooltip="{path: 'view>/treeTableSet', formatter: '.formatter.getCreateFunctLoctButtonTooltip' }"
+                    icon="{= ${device>/system/desktop} ? '' : 'sap-icon://add' }"
+                    enabled="{view>/enableButtonCreateFunctionalLocation}"
+                    press="onPressCreate"
+                />
+            </Toolbar>
+        </f:footer>
+    </f:DynamicPage>
+</mvc:View>

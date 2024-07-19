@@ -1,0 +1,32 @@
+{
+	"MapProvider": [
+		{
+			"Id": "OSM",
+			"name": "Open Street Map",
+			"tileX": "256",
+			"tileY": "256",
+			"minLOD": "1",
+			"maxLOD": "19",
+			"copyright": "OpenStreetMap",
+			"Source": [
+				{
+					"id": "a",
+					"url": "https://a.tile.openstreetmap.org/{LOD}/{X}/{Y}.png"
+				}
+			]
+		}
+	],
+	"MapLayerStacks": [
+		{
+			"name": "Default",
+			"MapLayer": [
+				{
+					"name": "Default",
+					"refMapProvider": "Open Street Map",
+					"opacity": "1.0",
+					"colBkgnd": "RGB(255,255,255)"
+				}
+			]
+		}
+	]
+}

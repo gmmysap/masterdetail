@@ -1,0 +1,76 @@
+<mvc:View controllerName="masterdetail.controller.Detail" 
+        xmlns="sap.m" 
+        xmlns:mvc="sap.ui.core.mvc" 
+        xmlns:uxap="sap.uxap" 
+        xmlns:core="sap.ui.core">
+
+<uxap:ObjectPageLayout enableLazyLoading="false" subSectionLayout="TitleOnTop" showHeaderContent="true" showTitleInHeaderContent="false" alwaysShowContentHeader="true" flexEnabled="false" 
+        busy="{view>/busy}" busyIndicatorDelay="0">
+        <uxap:headerTitle>
+            <uxap:ObjectPageDynamicHeaderTitle areaShrinkRatio="0.9:1:0.5">
+                <uxap:heading>
+                    <Title text="{i18n>view.detail.header.label.CustomerID} : {CustomerID}" wrapping="true" class="sapUiSmallMarginEnd" />
+                </uxap:heading>
+                <uxap:navigationActions>
+                    <Button
+                        id = "idMessagePopover"
+                        type="Emphasized"
+                        icon="sap-icon://alert"
+                        visible="{=${Orders>/}.length > 0}"
+                        text="{=${Orders>/}.length}"
+                        press="onPressButton"
+                    />
+                    <OverflowToolbarButton type="Transparent" icon="sap-icon://full-screen" visible="{= !${device>/system/phone} &amp;&amp; !${appView>/midColumnFullScreen} }" press="onPressFullScreen" />
+                    <OverflowToolbarButton type="Transparent" icon="sap-icon://exit-full-screen" visible="{= !${device>/system/phone} &amp;&amp; ${appView>/midColumnFullScreen} }" press="onPressFullScreen" />
+                    <OverflowToolbarButton type="Transparent" icon="sap-icon://decline" press="onPressCloseDetail" />
+                </uxap:navigationActions>
+                <uxap:navigationActions>
+
+                    <OverflowToolbarButton
+                        type="Transparent"
+                        icon="sap-icon://edit"
+                        tooltip="{path: 'CanEdit', formatter: '.formatter.getEditBtnText'}"
+                        text="{path: 'CanEdit', formatter: '.formatter.getEditBtnText'}"
+                        press="onPressEdit"
+                        enabled="{CanEdit}"
+                    />
+                </uxap:navigationActions>
+
+            </uxap:ObjectPageDynamicHeaderTitle>
+        </uxap:headerTitle>
+        <uxap:headerContent>
+            <FlexBox wrap="Wrap" fitContainer="false" justifyContent="SpaceBetween" alignItems="Start">
+                <VBox justifyContent="Center" class="sapUiMediumMarginEnd sapUiSmallMarginBottom">
+                    <ObjectStatus title="{i18n>view.detail.header.label.CompanyName}" text="{CompanyName} ({City})" />
+                    <ObjectStatus title="PostalCode" text="{PostalCode}" />
+                    <ObjectStatus title="Country" text="{Country}" />
+                 </VBox>
+                <VBox justifyContent="Center" class="sapUiMediumMarginEnd sapUiSmallMarginBottom">
+                    <ObjectStatus title="Phone" text="{Phone}" />
+                
+                </VBox>
+               </FlexBox>
+        </uxap:headerContent>
+        <uxap:sections>
+            <uxap:ObjectPageSection titleLevel="H6" titleUppercase="false" class="sapUiMediumMarginBottom">
+             <uxap:subSections>
+                    <uxap:ObjectPageSubSection>
+                        <uxap:blocks>
+                              <core:Fragment fragmentName="masterdetail.view.fragment.DetaiLocationtForm" type="XML" />
+ 
+                        </uxap:blocks>
+                    </uxap:ObjectPageSubSection>
+                </uxap:subSections>
+
+                <uxap:subSections>
+                    <uxap:ObjectPageSubSection>
+                        <uxap:blocks>
+                              <core:Fragment fragmentName="masterdetail.view.fragment.DatailSmartTable" type="XML" />
+ 
+                        </uxap:blocks>
+                    </uxap:ObjectPageSubSection>
+                </uxap:subSections>
+            </uxap:ObjectPageSection>
+        </uxap:sections>
+            </uxap:ObjectPageLayout>
+</mvc:View>

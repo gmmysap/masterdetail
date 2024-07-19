@@ -1,0 +1,23 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:core="sap.ui.core"
+>
+    <Dialog>
+        <content>
+            <f:SimpleForm />
+        </content>
+
+        <buttons>
+            <Button
+                text="OK"
+                press="onDialogMessageConfirm"
+            />
+            <Button
+                text="Cacel"
+                type="Transparent"
+                press="onDialogMessageCancel"
+            />
+        </buttons>
+    </Dialog>
+</core:FragmentDefinition>

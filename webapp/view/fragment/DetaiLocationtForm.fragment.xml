@@ -1,0 +1,77 @@
+<core:FragmentDefinition
+    xmlns:core="sap.ui.core" 
+    xmlns="sap.m" 
+    xmlns:form="sap.ui.layout.form" 
+    xmlns:layout="sap.ui.layout"
+>
+
+<form:Form editable="true">
+		<form:layout>
+			<form:ColumnLayout columnsM="2" columnsL="2" columnsXL="2" />
+		</form:layout>
+		<form:formContainers>
+			<form:FormContainer>
+				<form:formElements>
+					<!-- Block Left -->
+					<form:FormElement>
+						<form:label>
+							<Label labelFor="idCity" text="City" required="true"/>
+						</form:label>
+						<form:fields>
+							<Input id="City" fieldGroupIds="idFormSiteAssignment" value="{City}" editable="{view>/editMode}"
+								busyIndicatorSize="Small" busyIndicatorDelay="0" required="true"
+								showValueHelp="true" valueHelpOnly="true" valueHelpRequest="onCity" change="onChangeRequiredField">
+								<layoutData>
+									<form:ColumnElementData cellsSmall="{= ${device>/system/phone} ? 12 : 5 }" cellsLarge="2" />
+								</layoutData>
+							</Input>
+							<Text text="{PlanningPlantDesc}" />
+						</form:fields>
+					</form:FormElement>
+					
+					<form:FormElement>
+						<form:label>
+							<Label labelFor="idCountry" text="Country" />
+						</form:label>
+						<form:fields>
+							<Input id="idCountry" value="{Country}" editable="{view>/editMode}"
+								/>
+						</form:fields>
+					</form:FormElement>
+				</form:formElements>
+			</form:FormContainer>	
+			<form:FormContainer>	
+				<form:formElements>
+					<!-- Block Right -->
+					
+                    <form:FormElement label="Longitude" visible="{view>/editMode}">
+						<form:fields>
+                            <Input id="idLatitude" value="{path: 'view>/Latitude', formatter: '.formatter.getFormattedNumberForGeoCoordinates'}" editable="true" />
+							<Input id="idLongitude" value="{path: 'view>/Longitude', formatter: '.formatter.getFormattedNumberForGeoCoordinates'}" editable="true" />
+						</form:fields>
+						 <Button
+                                id="idButtonSetGeo"
+                                press="onPressButton"
+                                text="Geo setzen"
+                                type="Emphasized"
+                                icon="sap-icon://map-fill"
+                            />
+					</form:FormElement>
+                    <form:FormElement label="{i18n>view.location.label.latitudeAndLongitude}" visible="{= !${view>/editMode} }">
+						<form:fields>
+							<Link id="idLinkSetGeo"
+							       text="{path: 'view>/Latitude', formatter: '.formatter.getFormattedNumberForGeoCoordinates'}, 
+                                        {path: 'view>/Longitude', formatter: '.formatter.getFormattedNumberForGeoCoordinates'}" press="onPressButton" />
+						</form:fields>
+					</form:FormElement>
+                    <form:FormElement label="{i18n>view.functLocation.label.latitudeAndLongitude}" visible="{= !${view>/editMode}}">
+						<form:fields>
+                            <Text text="{i18n>view.functLocation.text.geoDataNotAvailable}" />
+						</form:fields>
+					</form:FormElement>
+				</form:formElements>
+			</form:FormContainer>
+		</form:formContainers>
+	</form:Form>
+ 
+</core:FragmentDefinition>

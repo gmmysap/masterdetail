@@ -1,0 +1,71 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:smartTable="sap.ui.comp.smarttable"
+>
+    <smartTable:SmartTable
+        id="LineItemsSmartTable"
+        entitySet="Customers"
+        smartFilterId="idChecklistSmartFilterBar"
+        tableType="Table"
+        useExportToExcel="true"
+        beforeExport="onBeforeExport"
+        useVariantManagement="false"
+        useTablePersonalisation="true"
+        header="Line Items"
+        showRowCount="true"
+        persistencyKey="SmartTableAnalytical_Explored"
+        enableAutoBinding="true"
+        showFullScreenButton="true"
+        class="sapUiResponsiveContentPadding"
+        enableAutoColumnWidth="true"
+    >
+        <Table
+            id="idMainTable"
+            width="auto"
+            mode="MultiSelect"
+            growing="false"
+            sticky="ColumnHeaders,HeaderToolbar,InfoToolbar"
+            selectionChange="onSelectionChange"
+            updateStarted="onTableUpdateStarted"
+            updateFinished="onTableUpdateFinished"
+            busyIndicatorDelay="0"
+        >
+            <columns>
+                <Column
+                    minScreenWidth="Tablet"
+                    demandPopin="true"
+                >
+                    <customData>
+                        <core:CustomData
+                            key="p13nData"
+                            value='\{"columnKey": "CustomerID", "leadingProperty": "CustomerID", "columnIndex": 1, "sortProperty": "CustomerID", "filterProperty": "CustomerID"}'
+                        />
+                    </customData>
+                    <Text text="CustomerID" />
+                </Column>
+                <Column
+                    minScreenWidth="Tablet"
+                    demandPopin="true"
+                >
+                    <customData>
+                        <core:CustomData
+                            key="p13nData"
+                            value='\{"columnKey": "CompanyName", "leadingProperty": "CompanyName", "columnIndex": 2, "sortProperty": "CompanyName", "filterProperty": "CompanyName"}'
+                        />
+                    </customData>
+                    <Text text="CompanyName" />
+                </Column>
+            </columns>
+            <items>
+                <ColumnListItem  type="Navigation" press="onPressGoToDatailsPage1"
+                >
+                    <cells>
+                        <Text text="{CustomerID}" />
+                        <Text text="{CompanyName}" />
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+    </smartTable:SmartTable>
+</core:FragmentDefinition>
