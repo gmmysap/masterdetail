@@ -59,9 +59,15 @@ sap.ui.define([
 						oDialog.setTitle("DialogMessage");
 					  break;
 					case "Ursachencode":
-						var oDialog = sap.ui.xmlfragment("masterdetail.view.fragment.CouseCodePopup", this);
+						var oDialog = sap.ui.xmlfragment("masterdetail.view.fragment.CouseCodePopup", callederCtr);
 						oDialog.setTitle("rsachencode");
 					  break;
+
+					case "NewOrder"  :
+						var oDialog = sap.ui.xmlfragment("masterdetail.view.fragment.DialogNewOrder", callederCtr);
+						oDialog.setTitle("rsachencode");
+					  break;
+
 					default:
 					  alert("unknown");
 				  }

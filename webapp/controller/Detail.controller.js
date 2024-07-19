@@ -116,6 +116,9 @@ onPressButton: function(oEvent) {
 		case "idMessagePopover":
 			this.onMessagePopoverPress(oEvent);
 		  break;  
+        case "idNewOrder":
+			this._onNewOrder(oEvent);
+			break;	
 		default:
 		  alert("Id unknown");
 	  }
@@ -135,6 +138,20 @@ onPressButton: function(oEvent) {
         this._oDialogMessage.open();
 		 
 		 
+		},
+
+		_onNewOrder: function (oEvent) {
+
+			const oSource = oEvent.getSource();
+
+			
+			if (!this._oNewOrder) {
+			  this._oNewOrder = this.createPopup("NewOrder", this);
+	}
+			this._oNewOrder.open();
+			 
+			 
+
 		},
   
 		// Geo begin	

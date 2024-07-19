@@ -21,6 +21,12 @@
         enableAutoColumnWidth="true"
         beforeRebindTable="onBeforeRebindTable"
     >
+    	<smartTable:customToolbar>
+			<OverflowToolbar design="Transparent">
+				<ToolbarSpacer/>
+				<OverflowToolbarButton id= "idNewOrder" icon="sap-icon://activate" tooltip="New Order" press="onPressButton"/>
+				</OverflowToolbar>
+		</smartTable:customToolbar>
         <Table
             id="idMainTable"
             width="auto"
