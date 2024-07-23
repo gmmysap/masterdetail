@@ -24,7 +24,9 @@
     	<smartTable:customToolbar>
 			<OverflowToolbar design="Transparent">
 				<ToolbarSpacer/>
-				<OverflowToolbarButton id= "idNewOrder" icon="sap-icon://activate" tooltip="New Order" press="onPressButton"/>
+				<OverflowToolbarButton id= "idNewOrder" icon="sap-icon://SAP-icons-TNT/data" tooltip="New Order" press="onPressButton"/>
+                <OverflowToolbarButton id= "idShowOrder" icon="sap-icon://display" tooltip="New Order" press="onPressButton"/>
+                <OverflowToolbarButton id= "idChangeOrder" icon="sap-icon://edit" tooltip="New Order" press="onPressButton"/>
 				</OverflowToolbar>
 		</smartTable:customToolbar>
         <Table

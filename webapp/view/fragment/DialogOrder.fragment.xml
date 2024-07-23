@@ -1,0 +1,130 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:core="sap.ui.core"
+>
+    <Dialog>
+        <content>
+            <VBox class="sapUiSmallMargin">
+                <f:SimpleForm
+                    id="SimpleFormChange354"
+                    editable="{view>/editDialogEntry}"
+                    layout="ResponsiveGridLayout"
+                    title="Address"
+                    labelSpanXL="3"
+                    labelSpanL="3"
+                    labelSpanM="3"
+                    labelSpanS="12"
+                    adjustLabelSpan="false"
+                    emptySpanXL="4"
+                    emptySpanL="4"
+                    emptySpanM="4"
+                    emptySpanS="0"
+                    columnsXL="1"
+                    columnsL="1"
+                    columnsM="1"
+                    singleContainerFullSize="false"
+                >
+                    <f:content>
+                        <Label text="OrderID" />
+                        <Input
+                            id="idOrderID"
+                            editable="false"
+                            value="{OrderID}"
+                        />
+
+                        <Label text="CustomerID" />
+                        <Input
+                            id="idCustomerID"
+                            editable="false"
+                            value="{CustomerID}"
+                        />
+                        <Label text="Employe" />
+                        <Select
+                            id="idEmployeeID"
+                            editable="{view>/editDialogEntry}"
+                            items="{path:'/Employees'}"
+                            selectedKey="{EmployeeID}"
+                        >
+                            <core:Item
+                                key="{EmployeeID}"
+                                text="{LastName} {FirstName}"
+                            />
+                        </Select>
+
+                        <Label text="OrderDate" />
+                        <Input value="{OrderDate}" editable="{view>/editDialogEntry}" />
+
+                        <Label text="RequiredDate" />
+                        <Input value="{RequiredDate}" editable="{view>/editDialogEntry}" />
+
+                        <Label text="ShippedDate" />
+                        <Input value="{ShippedDate}" editable="{view>/editDialogEntry}" />
+
+                        <Label text="ShipVia" />
+                        <Input value="{ShipVia}" editable="{view>/editDialogEntry}" />
+
+                        <Label text="Freight" />
+                        <Input value="{Freight}" editable="{view>/editDialogEntry}"/>
+
+                        <Label text="ShipName" />
+                        <Input value="{ShipName}" editable="{view>/editDialogEntry}" />
+
+                        <Label text="ShipAddress" />
+                        <Input value="{ShipAddress}" editable="{view>/editDialogEntry}"/>
+
+                        <Label text="ShipCity" />
+                        <Input value="{ShipCity}" editable="{view>/editDialogEntry}"/>
+
+                        <Label text="ShipRegion" />
+                        <Input value="{ShipRegion}" editable="{view>/editDialogEntry}" />
+
+                        <Label text="ShipPostalCode" />
+                        <Input value="{ShipPostalCode}" editable="{view>/editDialogEntry}" />
+
+                        <Label text="ShipPostalCode" />
+                        <Input value="{ShipPostalCode}" editable="{view>/editDialogEntry}"/>
+
+                        <Label text="ShipCountry" />
+                        <Input value="{ShipCountry}" editable="{view>/editDialogEntry}"/>
+
+                        <Label text="Country" />
+                        <Select
+                            id="country"
+                            editable="{view>/editDialogEntry}"
+                            items="{path:'/Products'}"
+                            selectedKey="{ProductID}"
+                        >
+                            <core:Item
+                                key="{ProductID}"
+                                text="{ProductName}"
+                            />
+                        </Select>
+                    </f:content>
+                </f:SimpleForm>
+            </VBox>
+        </content>
+
+        <buttons>
+            <Button
+                id="idonOrderChange"
+                text="Change"
+                visible="{= ${view>/newDialogEntry} === false &amp;&amp; ${view>/editDialogEntry} === true }"
+                press="onPressButton"
+            />
+             <Button
+                id="idonOrderInsert"
+                text="Insert"
+                visible="{view>/newDialogEntry}"
+                press="onPressButton"
+            />
+            <Button
+                id="idonCancelOrder"
+                text="Cacel"
+                type="Transparent"
+                press="onPressButton"
+            />
+        </buttons>
+    </Dialog>
+</core:FragmentDefinition>

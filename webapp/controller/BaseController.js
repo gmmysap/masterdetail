@@ -63,9 +63,9 @@ sap.ui.define([
 						oDialog.setTitle("rsachencode");
 					  break;
 
-					case "NewOrder"  :
-						var oDialog = sap.ui.xmlfragment("masterdetail.view.fragment.DialogNewOrder", callederCtr);
-						oDialog.setTitle("rsachencode");
+					case "DialogOrder"  :
+						var oDialog = sap.ui.xmlfragment("masterdetail.view.fragment.DialogOrder", callederCtr);
+						oDialog.setTitle("DialogOrder");
 					  break;
 
 					default:
