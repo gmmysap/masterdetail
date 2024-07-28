@@ -125,26 +125,26 @@ sap.ui.define([
 						this.onMessagePopoverPress(oEvent);
 						break;
 					case "idNewOrder":
-						this._onNewOrder(oEvent);
+						this._onDialogOrder(oEvent, "Insert");
 						break;
 					case "idShowOrder":
-						this._onShowOrder(oEvent);
+						this._onDialogOrder(oEvent, "Show");
 						break;
 
 					case "idonCancelOrder":
 						this._onCancelDialogOrder(oEvent);
 						break;
 					case "idChangeOrder":
-						this._onDialogOChangerder(oEvent);
+						this._onDialogOrder(oEvent, "Change");
 						break;
 
 					case "idonOrderInsert":
-						this._onidonOrderInsert(oEvent);
+						this._onidonOrderConfirm(oEvent);
 						break;
 					case "idonOrderChange":
-						this._onidonOrderChange(oEvent);
+						this._onidonOrderConfirm(oEvent);
 						break;
-                    
+
 					default:
 						alert("Id unknown");
 				}
@@ -166,43 +166,70 @@ sap.ui.define([
 
 			},
 
-			_onDialogOChangerder: function (oEvent) {
+			_onDialogOrder: function (oEvent, sOperation) {
 
 				const oSource = oEvent.getSource();
+				let oBindingContext = {};
+				let sTittle = "";
+				let oModel = oSource.getModel();
 
-				this.getModel("view").setProperty("/editDialogEntry", true);
-				this.getModel("view").setProperty("/newDialogEntry", false);
+				switch (sOperation) {
 
-				var selectedRows = this.getView().byId("idMainTable").getSelectedItems();
-				EntityOperation.readData(selectedRows[0].getBindingContext());
+					case "Show":
+						this.getModel("view").setProperty("/editDialogEntry", false);
+			         	this.getModel("view").setProperty("/newDialogEntry", false);
+						var selectedRows = this.getView().byId("idMainTable").getSelectedItems();
+						EntityOperation.readData(selectedRows[0].getBindingContext());  // <= nachlesen, weil SmartTable nicht alle Daten aus OData zieht
+						oBindingContext = selectedRows[0].getBindingContext();
+						sTittle = "Show Order";
+						break;
+
+
+					case "Change":
+
+					    this.getModel("view").setProperty("/editDialogEntry", true);
+				    	this.getModel("view").setProperty("/newDialogEntry", false);
+
+						var selectedRows = this.getView().byId("idMainTable").getSelectedItems();
+						EntityOperation.readData(selectedRows[0].getBindingContext()); // <= nachlesen, weil SmartTable nicht alle Daten aus OData zieht
+
+						oBindingContext = selectedRows[0].getBindingContext();
+						sTittle = "Change Order";
+						break;
+
+					case "Insert":
+						// Buttons und Felder freischalten/ editierbar
+						this.getModel("view").setProperty("/editDialogEntry", true);
+			        	this.getModel("view").setProperty("/newDialogEntry", true);
+						// neue Ordernr ermittelt (letzte + 1)
+						let aItems = this.getView().byId("idMainTable").getItems();
+						let sLastItemContext = aItems[aItems.length - 1].getBindingContext();
+						let aOrdersEntity = oModel.getProperty(sLastItemContext.getPath());
+
+
+						const oOrdersProperties = {
+							properties: {
+								"OrderID": aOrdersEntity.OrderID + 1,
+								"CustomerID": aOrdersEntity.CustomerID
+							}
+						};
+
+						oBindingContext = EntityOperation.createEntry(oModel, sOrdersEntitySet, oOrdersProperties);
+						sTittle = "New Order";
+						break;
+
+				}
+
+
 
 				if (!this._oDialogOrder) {
 					this._oDialogOrder = this.createPopup("DialogOrder", this);
 
 				}
 
-				this._oDialogOrder.setBindingContext(selectedRows[0].getBindingContext());
+				this._oDialogOrder.setBindingContext(oBindingContext);
+				this._oDialogOrder.setTitle(sTittle);
 				this._oDialogOrder.open();
-			},
-
-			_onShowOrder: function (oEvent) {
-
-				const oSource = oEvent.getSource();
-
-				this.getModel("view").setProperty("/editDialogEntry", false);
-				this.getModel("view").setProperty("/newDialogEntry", false);
-
-				var selectedRows = this.getView().byId("idMainTable").getSelectedItems();
-				EntityOperation.readData(selectedRows[0].getBindingContext());
-
-				if (!this._oDialogOrder) {
-					this._oDialogOrder = this.createPopup("DialogOrder", this);
-
-				}
-
-				this._oDialogOrder.setBindingContext(selectedRows[0].getBindingContext());
-				this._oDialogOrder.open();
-
 			},
 
 			_getOrderContext: function (sODataPath) {
@@ -211,96 +238,7 @@ sap.ui.define([
 				});
 			},
 
-			_onNewOrder: function (oEvent) {
 
-				const oSource = oEvent.getSource();
-				let oModel = oSource.getModel();
-
-				this.getModel("view").setProperty("/editDialogEntry", true);
-				this.getModel("view").setProperty("/newDialogEntry", true);
-
-				// neue Ordernr ermittelt (letzte + 1)
-				let aItems = this.getView().byId("idMainTable").getItems();
-				let sLastItemContext = aItems[aItems.length - 1].getBindingContext();
-				let aOrdersEntity = oModel.getProperty(sLastItemContext.getPath());
-
-
-				const oOrdersProperties = {
-					properties: {
-						"OrderID": aOrdersEntity.OrderID + 1,
-						"CustomerID": aOrdersEntity.CustomerID
-					}
-				};
-
-				if (!this._oDialogOrder) {
-					this._oDialogOrder = this.createPopup("DialogOrder", this);
-				}
-
-				this._oDialogOrder.setBindingContext(EntityOperation.createEntry(oModel, sOrdersEntitySet, oOrdersProperties));
-
-
-				this._oDialogOrder.open();
-
-
-
-				/*          let sODataPath = oModel.createKey("/Orders", {OrderID : '10453'});
-						 let oContext = { OrderID :  "10453",
-							  CustomerID :"AROUT"
-			 
-							};
-			 
-						  var oModelNewOrder = new JSONModel({
-							 OrderID :  "1122",
-							  CustomerID :"AROUT"
-			 
-						 });
-			 
-						 if (!this._oDialogOrder) {
-							 this._oDialogOrder = this.createPopup("DialogOrder", this);
-						   } */
-
-				//	  this._oDialogOrder.setModel(oModelNewOrder);
-				//	   this._oDialogOrder.setBindingContext(oNewOrderContext);
-				//this._oDialogOrder.bindElement(oContext);
-
-				/* 	let aItems = this.getView().byId("idMainTable").getItems();
-					let sLastItemContext = aItems[aItems.length-1].getBindingContext();
-			
-					let aOrdersEntity = oModel.getProperty(sLastItemContext.getPath());
-			 */
-
-				sap.ui.getCore().byId("idOrderID").setValue(aOrdersEntity.OrderID + 1);
-
-				this._oDialogOrder.open();
-
-
-
-				return;
-				this._getOrderContext(sODataPath).then((oNewOrderContext) => {
-
-					if (!this._oDialogOrder) {
-						this._oDialogOrder = this.createPopup("DialogOrder", this);
-					}
-
-					this._oDialogOrder.setBindingContext(oNewOrderContext);
-
-					this._oDialogOrder.open();
-
-
-
-				})
-
-					.catch(() => {
-
-					});
-
-
-				//     let oNewOrderContext = oModel.createBindingContext(sPath,oContext,null,null);
-
-
-
-
-			},
 
 			onPressGoToDatailsPage1: function (oEvent) {
 				/* 
@@ -346,33 +284,31 @@ sap.ui.define([
 			_onCancelDialogOrder: function (oEvent) {
 				const oSource = oEvent.getSource();
 
+				let oContextPathToReset = oEvent.getSource().getParent().getBindingContext().getPath();
+					let aResetChanges = [];
+
+					aResetChanges.push(oContextPathToReset);
+
+					if(oSource.getParent().getModel().hasPendingChanges() ){  // Änderungen da
+						oSource.getParent().getModel().resetChanges(aResetChanges); // nur Änderungen zu dem Aufruf reseten
+
+					}
+
 				oSource.getParent().close();
 
 			},
-			_onidonOrderInsert: function (oEvent) {
+			
+			_onidonOrderConfirm: function (oEvent) {
 				const oSource = oEvent.getSource();
+
+				if(oSource.getParent().getModel().hasPendingChanges() ){ // Änderungen da
+					oSource.getParent().getModel().submitChanges();      // Änderungen commit, OData call zum Backend
+
+				}
 
 				oSource.getParent().close();
 
-				// let oTableOrders = this.getView().byId("idMainTable");
-				let oTableOrders = this.getView().byId("LineItemsSmartTable");
-				
-				oTableOrders.rebindTable(true);
-			},
-			_onidonOrderChange : function (oEvent) {
-				const oSource = oEvent.getSource();
-
-				oSource.getParent().close();
-
-				let oBindContextDialog = oSource.getParent().getBindingContext();
-				let oDateModelBindContext = oSource.getParent().getModel().getProperty(oBindContextDialog.getPath());
-
-				// let oTableOrders = this.getView().byId("idMainTable");
-				let oTableOrders = this.getView().byId("LineItemsSmartTable");
-				
-				oTableOrders.rebindTable(true);
-
-			}
+						}
 
 		});
 	});

@@ -65,7 +65,7 @@ sap.ui.define([
 
 					case "DialogOrder"  :
 						var oDialog = sap.ui.xmlfragment("masterdetail.view.fragment.DialogOrder", callederCtr);
-						oDialog.setTitle("DialogOrder");
+						oDialog.setTitle("Order");
 					  break;
 
 					default:
