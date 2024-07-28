@@ -3,8 +3,9 @@ sap.ui.define([
 	"sap/m/GroupHeaderListItem",
 	"./constants",
 	"./models",
-	"sap/ui/core/format/NumberFormat"
-], function (coreLibrary, GroupHeaderListItem, constants, models, NumberFormat) {
+	"sap/ui/core/format/NumberFormat",
+	"sap/ui/core/format/DateFormat",
+], function (coreLibrary, GroupHeaderListItem, constants, models, NumberFormat,DateFormat) {
 	"use strict";
 
 	// shortcut for sap.ui.core.ValueState
@@ -30,9 +31,25 @@ sap.ui.define([
 		return NumberFormat.getFloatInstance(GEOFormatOptions).format(fNumber);
 	};
 
+	const  formatDate = (oDate) => {
+		if (oDate) {
+			var iHours = oDate.getHours(),
+				iMinutes = oDate.getMinutes(),
+				iSeconds = oDate.getSeconds();
+
+			if (iHours !== 0 || iMinutes !== 0 || iSeconds !== 0) {
+				return DateFormat.getDateTimeInstance({ style: "medium" }).format(oDate);
+			} else  {
+				return DateFormat.getDateInstance({ style: "medium" }).format(oDate);
+			}
+		}
+	};
+
+
 	return {
 
-		getFormattedNumberForGeoCoordinates: getFormattedNumberForGeoCoordinates
+		getFormattedNumberForGeoCoordinates: getFormattedNumberForGeoCoordinates,
+		formatDate:formatDate
 	};
 
 });
