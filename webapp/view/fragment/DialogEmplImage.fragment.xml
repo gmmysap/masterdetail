@@ -14,7 +14,7 @@
 				labelSpanM="3"
 				labelSpanS="5">
 			<Label text="Nachname" />
-			<Text id="text0" emptyIndicatorMode="On" text="{/Employees/LastName}"></Text>
+			<Text id="text0" emptyIndicatorMode="On" text="{LastName}"></Text>
 		</f:SimpleForm>
 
             <!--  <Carousel id="idCarousel" pages="{Employee}" class="sapUiContentPadding" loop="true" >
@@ -27,7 +27,9 @@
                 </Image>
             </Carousel>  -->
 
-            <!-- <Image  src="{path: 'Photo', formatter:'.formatter.formatPhoto'}"  decorative="false" densityAware="false" height="400px" width="500px"/> -->
+            <!-- <Image  src="{path: 'EmployeeID', formatter:'.formatter.formatPhoto'}"  decorative="false" densityAware="false" height="400px" width="500px"/> -->
+            <Image  src="{path: 'PhotoPath'}"  decorative="false" densityAware="false" height="400px" width="500px"/>
+            
         </content>
          <beginButton>
 			<Button icon="sap-icon://download" press="onPressDownloadImage" /> 

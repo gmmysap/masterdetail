@@ -72,6 +72,18 @@
                     <customData>
                         <core:CustomData
                             key="p13nData"
+                            value='\{"columnKey": "EmployeeID", "leadingProperty": "EmployeeID", "columnIndex": 2, "sortProperty": "EmployeeID", "filterProperty": "EmployeeID"}'
+                        />
+                    </customData>
+                    <Text text="EmployeeID" />
+                </Column>
+                 <Column
+                    minScreenWidth="Tablet"
+                    demandPopin="true"
+                >
+                    <customData>
+                        <core:CustomData
+                            key="p13nData"
                             value='\{"columnKey": "RequiredDate", "leadingProperty": "RequiredDate", "columnIndex": 3, "sortProperty": "RequiredDate", "filterProperty": "RequiredDate"}'
                         />
                     </customData>
@@ -84,6 +96,7 @@
                     <cells>
                         <Text text="{OrderID}" />
                         <Text text="{CustomerID}" />
+                        <Text text="{EmployeeID}" />
                         <!-- <Text text="{ path: 'RequiredDate', type: 'sap.ui.model.type.DateTime', formatOptions: { pattern: 'dd.MM.yyyy' }}" /> -->
                         <Text text="{path: 'RequiredDate', formatter: '.formatter.formatDate'}" />
                     </cells>

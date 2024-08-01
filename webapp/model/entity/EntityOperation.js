@@ -79,7 +79,28 @@ sap.ui.define([], function () {
                 that.handleTheError(oError);
             }
         });
-    }
+    };
+	const readDataPromise = (oODataModel,oEntityContextPath) => {
+      //  const oModel = oEntityContext.getModel(); 
+
+		return new Promise((fnResolve, fnReject) => {
+			oODataModel.read(oEntityContextPath, {
+				success: fnResolve,
+				error: fnReject
+			});
+		});
+
+        oModel.read(oEntityContext.sPath, {
+            success: function(oData, oResponse) {
+                // we got ourselves some data
+            
+            },
+            error: function(oError) {
+                // something went terribly wrong
+                that.handleTheError(oError);
+            }
+        });
+    };
 
 	/**
 	 * @returns {Object}
@@ -93,6 +114,7 @@ sap.ui.define([], function () {
 		createEmptyEntry : createEmptyEntry,
 		create: create,
 		update: update,
-        readData: readData
+        readData: readData,
+		readDataPromise: readDataPromise
 	};
 });

@@ -270,13 +270,26 @@ sap.ui.define([
 				});
 			},
 
-
-
 			onPressGoToDatailsPage1: function (oEvent) {
 
 				const oSource = oEvent.getSource();
 
 				let sODataPath = oSource.getBindingContext().getPath();
+                sODataPath = sODataPath + "/Employee";
+
+				let aOrder = oSource.getModel().getProperty(sODataPath);
+
+			//	EntityOperation.readData(selectedRows[0].getBindingContext());
+
+				  EntityOperation.readDataPromise(oSource.getModel(),sODataPath).then((oData, oResponse) => {
+
+					var	oData22 = oData;
+
+				}, (oError) =>
+				{
+					sap.m.MessageToast.show(oError.responseText);
+
+				});  
 
 				this._createContext(sODataPath).then((oContext) => {
 					this.onDialogEmplImage(oContext);
