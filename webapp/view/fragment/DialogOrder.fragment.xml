@@ -10,21 +10,20 @@
                 <f:SimpleForm
                     id="SimpleFormChange354"
                     editable="{view>/editDialogEntry}"
-                    layout="ResponsiveGridLayout"
-                    title="Address"
-                    labelSpanXL="3"
-                    labelSpanL="3"
-                    labelSpanM="3"
-                    labelSpanS="12"
-                    adjustLabelSpan="false"
-                    emptySpanXL="4"
-                    emptySpanL="4"
-                    emptySpanM="4"
-                    emptySpanS="0"
-                    columnsXL="1"
-                    columnsL="1"
-                    columnsM="1"
-                    singleContainerFullSize="false"
+                	layout="ResponsiveGridLayout"
+			labelSpanXL="4"
+			labelSpanL="3"
+			labelSpanM="4"
+			labelSpanS="12"
+			adjustLabelSpan="false"
+			emptySpanXL="0"
+			emptySpanL="4"
+			emptySpanM="0"
+			emptySpanS="0"
+			columnsXL="2"
+			columnsL="1"
+			columnsM="1"
+			singleContainerFullSize="false"
                 >
                     <f:content>
                         <Label text="OrderID" />
@@ -54,40 +53,93 @@
                         </Select>
 
                         <Label text="OrderDate" />
-                        <Input value="{OrderDate}" editable="{view>/editDialogEntry}" />
+                        <!-- <Input value="{OrderDate}"  editable="{view>/editDialogEntry}"  /> -->
+                          <DateTimePicker
+                            id="idOrderDate"
+                            value="{ path:'OrderDate',
+				                     type:'sap.ui.model.type.Date',
+				                     formatOptions: {
+					                 style: 'medium',
+					            strictParsing: true }}"
+                            class="sapUiSmallMarginBottom" 
+                            editable="{view>/editDialogEntry}" />
 
                         <Label text="RequiredDate" />
-                        <Input value="{RequiredDate}" editable="{view>/editDialogEntry}" />
+                        <!-- <Input value="{RequiredDate}" editable="{view>/editDialogEntry}" /> -->
+                        <DateTimePicker
+                            id="idRequiredDate"
+                            value="{ path:'RequiredDate',
+				                     type:'sap.ui.model.type.Date',
+				                     formatOptions: {
+					                 style: 'medium',
+					            strictParsing: true }}"
+                            class="sapUiSmallMarginBottom" 
+                            editable="{view>/editDialogEntry}" />
 
                         <Label text="ShippedDate" />
-                        <Input value="{ShippedDate}" editable="{view>/editDialogEntry}" />
-
+                        <!-- <Input value="{ShippedDate}"  editable="{view>/editDialogEntry}"  /> -->
+                        <DateTimePicker
+                            id="idShippedDate"
+                            value="{ path:'ShippedDate',
+				                     type:'sap.ui.model.type.Date',
+				                     formatOptions: {
+					                 style: 'medium',
+					            strictParsing: true }}"
+                            class="sapUiSmallMarginBottom" 
+                            editable="{view>/editDialogEntry}" />
                         <Label text="ShipVia" />
-                        <Input value="{ShipVia}" editable="{view>/editDialogEntry}" />
+                        <Input
+                            value="{ShipVia}"
+                            editable="{view>/editDialogEntry}"
+                        />
 
                         <Label text="Freight" />
-                        <Input value="{Freight}" editable="{view>/editDialogEntry}"/>
+                        <Input
+                            value="{Freight}"
+                            editable="{view>/editDialogEntry}"
+                        />
 
                         <Label text="ShipName" />
-                        <Input value="{ShipName}" editable="{view>/editDialogEntry}" />
+                        <Input
+                            value="{ShipName}"
+                            editable="{view>/editDialogEntry}"
+                        />
 
                         <Label text="ShipAddress" />
-                        <Input value="{ShipAddress}" editable="{view>/editDialogEntry}"/>
+                        <Input
+                            value="{ShipAddress}"
+                            editable="{view>/editDialogEntry}"
+                        />
 
                         <Label text="ShipCity" />
-                        <Input value="{ShipCity}" editable="{view>/editDialogEntry}"/>
+                        <Input
+                            value="{ShipCity}"
+                            editable="{view>/editDialogEntry}"
+                        />
 
                         <Label text="ShipRegion" />
-                        <Input value="{ShipRegion}" editable="{view>/editDialogEntry}" />
+                        <Input
+                            value="{ShipRegion}"
+                            editable="{view>/editDialogEntry}"
+                        />
 
                         <Label text="ShipPostalCode" />
-                        <Input value="{ShipPostalCode}" editable="{view>/editDialogEntry}" />
+                        <Input
+                            value="{ShipPostalCode}"
+                            editable="{view>/editDialogEntry}"
+                        />
 
                         <Label text="ShipPostalCode" />
-                        <Input value="{ShipPostalCode}" editable="{view>/editDialogEntry}"/>
+                        <Input
+                            value="{ShipPostalCode}"
+                            editable="{view>/editDialogEntry}"
+                        />
 
                         <Label text="ShipCountry" />
-                        <Input value="{ShipCountry}" editable="{view>/editDialogEntry}"/>
+                        <Input
+                            value="{ShipCountry}"
+                            editable="{view>/editDialogEntry}"
+                        />
 
                         <Label text="Country" />
                         <Select
@@ -113,7 +165,7 @@
                 visible="{= ${view>/newDialogEntry} === false &amp;&amp; ${view>/editDialogEntry} === true }"
                 press="onPressButton"
             />
-             <Button
+            <Button
                 id="idonOrderInsert"
                 text="Insert"
                 visible="{view>/newDialogEntry}"

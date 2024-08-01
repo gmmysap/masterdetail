@@ -45,11 +45,29 @@ sap.ui.define([
 		}
 	};
 
+	const getImageUrl = (oEmployee) => {
+		const oModel = this.getOwnerComponent().getModel(),
+			sPath = oModel.createKey("/Employee", {
+				EmployeeID: oEmployee.EmployeeID
+
+			});
+
+		return oModel.sServiceUrl + sPath + "/$value";
+	};
+
+	const formatPhoto = (oFoto) => {
+
+		var oReuturn =  "data:image/png;base64," + oFoto;
+		return oReuturn;
+	};
+
 
 	return {
 
 		getFormattedNumberForGeoCoordinates: getFormattedNumberForGeoCoordinates,
-		formatDate:formatDate
+		formatDate:formatDate,
+		getImageUrl:getImageUrl,
+		formatPhoto:formatPhoto
 	};
 
 });

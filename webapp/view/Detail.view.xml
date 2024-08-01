@@ -9,9 +9,17 @@
         <uxap:headerTitle>
             <uxap:ObjectPageDynamicHeaderTitle areaShrinkRatio="0.9:1:0.5">
                 <uxap:heading>
-                    <Title text="{i18n>view.detail.header.label.CustomerID} : {CustomerID}" wrapping="true" class="sapUiSmallMarginEnd" />
+                    <!-- <Title text="{i18n>view.detail.header.label.CustomerID} : {CustomerID}" wrapping="true" class="sapUiSmallMarginEnd" /> -->
+                      <Title core:require="{ formatMessage: 'sap/base/strings/formatMessage' }" text="{parts: ['i18n>view.detail.header.label.CustomerID', 'CustomerID', 'CompanyName' ], formatter: 'formatMessage'}" wrapping="true" class="sapUiSmallMarginEnd" />
                 </uxap:heading>
                 <uxap:navigationActions>
+                 <Button
+                        id = "idShowEmployees"
+                        type="Emphasized"
+                        icon="sap-icon://alert"
+                        text="Mitarbeiter"
+                        press="onPressButton"
+                    />
                     <Button
                         id = "idMessagePopover"
                         type="Emphasized"

@@ -7,7 +7,7 @@ sap.ui.define([
 	"use strict";
 
 	return Controller.extend("masterdetail.controller.BaseController", {
- 
+
 		formatter: formatter,
 
 		/**
@@ -53,30 +53,35 @@ sap.ui.define([
 
 		createPopup: function (iDalogName, callederCtr) {
 			// Fragment als Dialog      
-				switch(iDalogName) {
-					case "DialogMessage":
-						var oDialog = sap.ui.xmlfragment("masterdetail.view.fragment.DialogMessage", callederCtr);
-						oDialog.setTitle("DialogMessage");
-					  break;
-					case "Ursachencode":
-						var oDialog = sap.ui.xmlfragment("masterdetail.view.fragment.CouseCodePopup", callederCtr);
-						oDialog.setTitle("rsachencode");
-					  break;
+			switch (iDalogName) {
+				case "DialogMessage":
+					var oDialog = sap.ui.xmlfragment("masterdetail.view.fragment.DialogMessage", callederCtr);
+					oDialog.setTitle("DialogMessage");
+					break;
+				case "DialogCarousel":
+					var oDialog = sap.ui.xmlfragment("masterdetail.view.fragment.DialogCarousel", callederCtr);
+					oDialog.setTitle("DialogCarousel");
+					break;
+					case "EmplImage":
+						var oDialog = sap.ui.xmlfragment("masterdetail.view.fragment.DialogEmplImage", callederCtr);
+						oDialog.setTitle("EmplImage");
+						break;
+					
 
-					case "DialogOrder"  :
-						var oDialog = sap.ui.xmlfragment("masterdetail.view.fragment.DialogOrder", callederCtr);
-						oDialog.setTitle("Order");
-					  break;
+				case "DialogOrder":
+					var oDialog = sap.ui.xmlfragment("masterdetail.view.fragment.DialogOrder", callederCtr);
+					oDialog.setTitle("Order");
+					break;
 
-					default:
-					  alert("unknown");
-				  }
-				if(oDialog){
-				  callederCtr.getView().addDependent(oDialog);
-				}
+				default:
+					alert("unknown");
+			}
+			if (oDialog) {
+				callederCtr.getView().addDependent(oDialog);
+			}
 
-				return oDialog;
-			},
+			return oDialog;
+		},
 
 		/**
 		 * Getter for the resource bundle.
@@ -116,7 +121,7 @@ sap.ui.define([
 				});
 			}
 		},
-		getSimpleFilterEQ: function(sPath, sOperator, sValue) {
+		getSimpleFilterEQ: function (sPath, sOperator, sValue) {
 
 			return new Filter(sPath, sOperator, sValue);
 
@@ -133,6 +138,28 @@ sap.ui.define([
 			if (aFunctLocTokens && Array.isArray(aFunctLocTokens) && aFunctLocTokens.length > 0)
 				return !aFunctLocTokens.find(x => !x.getText().startsWith("BL"));
 			else return false;
+		},
+		appendMessage: function (sMessage) {
+			let oMessageModel = this.getOwnerComponent().getModel("message");
+			var aItems = [];
+			const newItem = {
+				datatime: "1",
+				messtxt: sMessage
+			};
+			aItems = oMessageModel.getProperty("/MessagesList");
+			if (!aItems.length) {
+				var aItems = [];
+			}
+			oMessageModel.setProperty("/MessagesList", aItems.concat(newItem));
+
+
+		},
+
+		clearMessage: function (oEvent) {
+			let oMessageModel = this.getOwnerComponent().getModel("message");
+
+			oMessageModel.setProperty("/MessagesList", {});
+
 		}
 	});
 });

@@ -32,6 +32,8 @@ sap.ui.define([
 
                  // set the app wide view properties model
 			    this.setModel(models.createAppModel(), "app");
+
+                this.setModel(models.createMessageModel(), "message");
             }
         });
     }

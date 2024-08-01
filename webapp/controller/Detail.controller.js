@@ -124,6 +124,9 @@ sap.ui.define([
 					case "idMessagePopover":
 						this.onMessagePopoverPress(oEvent);
 						break;
+					case "idShowEmployees":
+						this.onDialogEmployeePress(oEvent);
+						break;
 					case "idNewOrder":
 						this._onDialogOrder(oEvent, "Insert");
 						break;
@@ -166,6 +169,35 @@ sap.ui.define([
 
 			},
 
+			onDialogEmplImage: function (oContext) {
+				//	const oSource = oEvent.getSource();
+
+
+				if (!this._oEmplImage) {
+					this._oEmplImage = this.createPopup("EmplImage", this);
+				}
+
+				//			this._oEmplImage.setBindingContext(oSource.getBindingContext());  // /Orders(10970)/Employee
+				this._oEmplImage.setBindingContext(oContext);  // /Orders(10970)/Employee
+				this._oEmplImage.open();
+
+
+			},
+
+			onDialogEmployeePress: function (oEvent) {
+				const oSource = oEvent.getSource();
+
+
+				if (!this._oEmployee) {
+					this._oEmployee = this.createPopup("DialogCarousel", this);
+				}
+
+				this._oEmployee.setBindingContext(oSource.getBindingContext());  // /Orders(10970)/Employee
+				this._oEmployee.open();
+
+
+			},
+
 			_onDialogOrder: function (oEvent, sOperation) {
 
 				const oSource = oEvent.getSource();
@@ -177,7 +209,7 @@ sap.ui.define([
 
 					case "Show":
 						this.getModel("view").setProperty("/editDialogEntry", false);
-			         	this.getModel("view").setProperty("/newDialogEntry", false);
+						this.getModel("view").setProperty("/newDialogEntry", false);
 						var selectedRows = this.getView().byId("idMainTable").getSelectedItems();
 						EntityOperation.readData(selectedRows[0].getBindingContext());  // <= nachlesen, weil SmartTable nicht alle Daten aus OData zieht
 						oBindingContext = selectedRows[0].getBindingContext();
@@ -187,8 +219,8 @@ sap.ui.define([
 
 					case "Change":
 
-					    this.getModel("view").setProperty("/editDialogEntry", true);
-				    	this.getModel("view").setProperty("/newDialogEntry", false);
+						this.getModel("view").setProperty("/editDialogEntry", true);
+						this.getModel("view").setProperty("/newDialogEntry", false);
 
 						var selectedRows = this.getView().byId("idMainTable").getSelectedItems();
 						EntityOperation.readData(selectedRows[0].getBindingContext()); // <= nachlesen, weil SmartTable nicht alle Daten aus OData zieht
@@ -200,7 +232,7 @@ sap.ui.define([
 					case "Insert":
 						// Buttons und Felder freischalten/ editierbar
 						this.getModel("view").setProperty("/editDialogEntry", true);
-			        	this.getModel("view").setProperty("/newDialogEntry", true);
+						this.getModel("view").setProperty("/newDialogEntry", true);
 						// neue Ordernr ermittelt (letzte + 1)
 						let aItems = this.getView().byId("idMainTable").getItems();
 						let sLastItemContext = aItems[aItems.length - 1].getBindingContext();
@@ -232,7 +264,7 @@ sap.ui.define([
 				this._oDialogOrder.open();
 			},
 
-			_getOrderContext: function (sODataPath) {
+			_createContext: function (sODataPath) {
 				return new Promise((fnResolve) => {
 					this.getModel().createBindingContext(sODataPath, null, null, fnResolve);
 				});
@@ -241,6 +273,16 @@ sap.ui.define([
 
 
 			onPressGoToDatailsPage1: function (oEvent) {
+
+				const oSource = oEvent.getSource();
+
+				let sODataPath = oSource.getBindingContext().getPath();
+
+				this._createContext(sODataPath).then((oContext) => {
+					this.onDialogEmplImage(oContext);
+				});
+
+
 				/* 
 							const oSource = oEvent.getSource();
 				
@@ -272,8 +314,10 @@ sap.ui.define([
 
 
 
-			onDialogMessageConfirm: function (oEvent) {
+			onDialogMessageClear: function (oEvent) {
 				const oSource = oEvent.getSource();
+
+				this.clearMessage();
 
 			},
 			onDialogMessageCancel: function (oEvent) {
@@ -285,30 +329,43 @@ sap.ui.define([
 				const oSource = oEvent.getSource();
 
 				let oContextPathToReset = oEvent.getSource().getParent().getBindingContext().getPath();
-					let aResetChanges = [];
+				let aResetChanges = [];
 
-					aResetChanges.push(oContextPathToReset);
+				aResetChanges.push(oContextPathToReset);
 
-					if(oSource.getParent().getModel().hasPendingChanges() ){  // Änderungen da
-						oSource.getParent().getModel().resetChanges(aResetChanges); // nur Änderungen zu dem Aufruf reseten
-
-					}
-
-				oSource.getParent().close();
-
-			},
-			
-			_onidonOrderConfirm: function (oEvent) {
-				const oSource = oEvent.getSource();
-
-				if(oSource.getParent().getModel().hasPendingChanges() ){ // Änderungen da
-					oSource.getParent().getModel().submitChanges();      // Änderungen commit, OData call zum Backend
+				if (oSource.getParent().getModel().hasPendingChanges()) {  // Änderungen da
+					oSource.getParent().getModel().resetChanges(aResetChanges); // nur Änderungen zu dem Aufruf reseten
 
 				}
 
 				oSource.getParent().close();
 
+			},
+
+			_onidonOrderConfirm: function (oEvent) {
+				const oSource = oEvent.getSource();
+				let that = this;
+
+				if (oSource.getParent().getModel().hasPendingChanges()) { // Änderungen da
+					oSource.getParent().getModel().submitChanges({
+						success: function (oData, oResponse) {
+							if (oData.__batchResponses[0].__changeResponses[0].response.statusCode >= 400) {
+								// sap.m.MessageToast.show(oData.__batchResponses[0].__changeResponses[0].response.body);
+
+								that.appendMessage(oData.__batchResponses[0].__changeResponses[0].message);
+							}
+						},
+						error: function (oError) {
+							sap.m.MessageToast.show(oError.responseText);
 						}
+					});
+					// Änderungen commit, OData call zum Backend
+
+				}
+
+				oSource.getParent().close();
+
+			}
 
 		});
 	});

@@ -5,13 +5,23 @@
 >
     <Dialog>
         <content>
-            <f:SimpleForm />
+            <List
+                headerText="Fehlers"
+                items="{path: 'message>/MessagesList'}"
+            >
+                <items>
+                    <ObjectListItem
+                        title="{message>datatime}"
+                        number="{message>messtxt}"
+                    />
+                </items>
+            </List>
         </content>
 
         <buttons>
             <Button
-                text="OK"
-                press="onDialogMessageConfirm"
+                text="Clear"
+                press="onDialogMessageClear"
             />
             <Button
                 text="Cacel"
