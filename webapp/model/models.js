@@ -5,6 +5,8 @@ sap.ui.define([
     function (JSONModel, Device) {
         "use strict";
 
+        let oODataModel;
+
         return {
             /**
              * Provides runtime info for the device the UI5 app is running on as JSONModel
@@ -37,7 +39,14 @@ sap.ui.define([
                 });
 
                 return oAppModel;
+            },
+            setODataModel: function (oNewODataModel) {
+                oODataModel = oNewODataModel;
+            },
+            getODataModel: function () { 
+                return oODataModel
             }
+        
         };
 
     });

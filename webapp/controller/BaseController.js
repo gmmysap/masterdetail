@@ -59,7 +59,8 @@ sap.ui.define([
 					oDialog.setTitle("DialogMessage");
 					break;
 				case "DialogCarousel":
-					var oDialog = sap.ui.xmlfragment("masterdetail.view.fragment.DialogCarousel", callederCtr);
+					//var oDialog = sap.ui.xmlfragment("masterdetail.view.fragment.DialogEmployeeTabelle", callederCtr);
+					var oDialog = sap.ui.xmlfragment("masterdetail.view.fragment.DialogEmployeeCarousel", callederCtr);
 					oDialog.setTitle("DialogCarousel");
 					break;
 					case "EmplImage":

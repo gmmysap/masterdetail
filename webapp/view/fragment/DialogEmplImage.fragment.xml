@@ -28,7 +28,8 @@
             </Carousel>  -->
 
             <!-- <Image  src="{path: 'EmployeeID', formatter:'.formatter.formatPhoto'}"  decorative="false" densityAware="false" height="400px" width="500px"/> -->
-            <Image  src="{path: 'PhotoPath'}"  decorative="false" densityAware="false" height="400px" width="500px"/>
+            <!-- <Image   src="{path: 'EmployeeID', formatter: '.formatter.getImageUrl'}"  decorative="false" densityAware="false" height="400px" width="500px"/> -->
+            <Image src="{path: 'Photo', formatter:'.formatter.formatPhotoPath'}" />
             
         </content>
          <beginButton>

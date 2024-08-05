@@ -34,6 +34,9 @@ sap.ui.define([
 			    this.setModel(models.createAppModel(), "app");
 
                 this.setModel(models.createMessageModel(), "message");
+
+                // set the component's OData model als  Variable merken  => Erreichaber models.getODataModel(),
+			models.setODataModel(this.getModel());
             }
         });
     }

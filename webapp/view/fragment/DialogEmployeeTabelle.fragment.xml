@@ -1,0 +1,87 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.f"
+>
+    <Dialog showHeader="false">
+        <content>
+            <Table
+                items="{
+                    path: '/Orders',
+                       parameters: {
+                          expand: 'Employee'
+                        }
+                      }"
+                growing="true"
+            >
+                <headerToolbar>
+                    <Toolbar>
+                        <Title
+                            width="100%"
+                            text="Emplooyes Data"
+                            titleStyle="H3"
+                            textAlign="Center"
+                        />
+                    </Toolbar>
+                </headerToolbar>
+
+                <columns>
+                    <Column>
+                        <Text text="Emplooye ID" />
+                    </Column>
+
+                    <Column>
+                        <Text text="First Name" />
+                    </Column>
+
+                    <Column>
+                        <Text text="Last Name" />
+                    </Column>
+
+                    <Column>
+                        <Text text="Pgot URL" />
+                    </Column>
+
+                    <Column>
+                        <Text text="Photo" />
+                    </Column>
+                </columns>
+
+                <items>
+                    <ColumnListItem>
+                        <Text text="{EmployeeID}" />
+
+                        <Text
+                            binding="{Employee}"
+                            text="{FirstName}"
+                        />
+
+                        <Text text="{Employee/LastName}" />
+
+                        <Text text="{Employee/PhotoPath}" />
+
+                        <Image
+                           src="{path: 'Employee/Photo', formatter:'.formatter.formatPhotoPath'}"
+                            height="50px"
+                            width="50px"
+                        />
+                    </ColumnListItem>
+                </items>
+            </Table>
+          </content>
+        <beginButton>
+            <Button
+                icon="sap-icon://download"
+                press="onPressDownloadImage"
+            />
+        </beginButton>
+        <endButton>
+            <Button
+                id="idonCancelImage2"
+                type="Transparent"
+                text="Schliessen"
+                press="onPressButton"
+            />
+        </endButton>
+    </Dialog>
+</core:FragmentDefinition>
